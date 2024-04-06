@@ -1,1 +1,5 @@
-spring.application.name=cambio-service
+server:
+  port: 8000
+spring:
+  application:
+    name: cambio-service
