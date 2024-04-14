@@ -18,6 +18,8 @@ public class CambioController {
 
     @Autowired
     private Environment environment;
+
+    @Autowired
     private CambioRepository cambioRepository;
 
     @GetMapping(value = "/{amount}/{from}/{to}")
