@@ -1,6 +1,7 @@
 package br.com.wellitonleal.bookservice.controller;
 
 import br.com.wellitonleal.bookservice.model.Book;
+import br.com.wellitonleal.bookservice.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,9 @@ public class BookController {
 
     @Autowired
     private Environment environment;
+
+    @Autowired
+    private BookRepository bookRepository;
 
     @GetMapping(value = "/{id}/{currency}")
     public Book findBookById(@PathVariable("id") Long id, @PathVariable("currency") String currency) {
