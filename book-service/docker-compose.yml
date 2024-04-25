@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:latest
+    container_name: book-service
+    ports:
+      - "3307:3307"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: book-service
+      MYSQL_PASSWORD: root
