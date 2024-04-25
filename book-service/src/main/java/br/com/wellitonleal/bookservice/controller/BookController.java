@@ -24,7 +24,11 @@ public class BookController {
     @GetMapping(value = "/{id}/{currency}")
     public Book findBookById(@PathVariable("id") Long id, @PathVariable("currency") String currency) {
 
+        var book = bookRepository.getReferenceById(id);
+        if(book == null) throw new RuntimeException("Book not found");
+
         var port = environment.getProperty("local.server.port");
-        return new Book(1L, "Nigel Poulton", "Docker Deep Dive", new Date(), 22.7, currency, port);
+        book.setEnvironment(port);
+        return book;
     }
 }
