@@ -1,5 +1,6 @@
 package br.com.wellitonleal.bookservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -7,6 +8,7 @@ import java.util.Date;
 import java.util.Objects;
 
 @Entity(name = "book")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Book implements Serializable {
 
     @Id
@@ -99,5 +101,9 @@ public class Book implements Serializable {
         result = 31 * result + (currency != null ? currency.hashCode() : 0);
         result = 31 * result + (environment != null ? environment.hashCode() : 0);
         return result;
+    }
+
+    public void setEnvironment(String port) {
+        this.environment = port;
     }
 }
