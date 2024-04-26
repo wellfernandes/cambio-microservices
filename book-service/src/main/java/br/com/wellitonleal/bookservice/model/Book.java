@@ -75,6 +75,26 @@ public class Book implements Serializable {
         return environment;
     }
 
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setLaunchDate(Date launchDate) {
+        this.launchDate = launchDate;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
