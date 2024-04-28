@@ -1,6 +1,7 @@
 package br.com.wellitonleal.bookservice.controller;
 
 import br.com.wellitonleal.bookservice.model.Book;
+import br.com.wellitonleal.bookservice.proxy.CambioProxy;
 import br.com.wellitonleal.bookservice.repository.BookRepository;
 import br.com.wellitonleal.bookservice.response.Cambio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,25 +24,19 @@ public class BookController {
     @Autowired
     private BookRepository bookRepository;
 
+    @Autowired
+    private CambioProxy cambioProxy;
+
     @GetMapping(value = "/{id}/{currency}")
     public Book findBookById(@PathVariable("id") Long id, @PathVariable("currency") String currency) {
 
         var book = bookRepository.getReferenceById(id);
         if(book == null) throw new RuntimeException("Book not found");
 
-        HashMap<String, String> params = new HashMap<>();
-        params.put("amount", book.getPrice().toString());
-        params.put("from", "USD");
-        params.put("to", String.valueOf(currency));
-
-        var response = new RestTemplate().
-                getForEntity("http://localhost:8000/cambio-service/{amount}/{from}/{to}",
-                        Cambio.class, params);
-
-        var cambio = response.getBody();
+        var cambio = cambioProxy.getCambio(book.getPrice(), "USD", currency);
 
         var port = environment.getProperty("local.server.port");
-        book.setEnvironment(port);
+        book.setEnvironment(port + " FEING");
 
         assert cambio != null;
         book.setPrice(cambio.getConvertedValue());
